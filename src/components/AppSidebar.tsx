@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Home,
   Inbox,
@@ -9,6 +11,7 @@ import {
   Plus,
   Projector,
   ChevronDown,
+  MoreHorizontal,
 } from "lucide-react";
 import {
   Sidebar,
@@ -20,6 +23,7 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -41,6 +45,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import { useRouter } from "next/navigation";
+import { use } from "react";
 
 const items = [
   {
@@ -50,7 +56,7 @@ const items = [
   },
   {
     title: "Inbox",
-    url: "#",
+    url: "/users/baher",
     icon: Inbox,
   },
   {
@@ -71,8 +77,10 @@ const items = [
 ];
 
 const AppSidebar = () => {
+  const router = useRouter();
+
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" side="left">
       <SidebarHeader className="py-4">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -152,6 +160,21 @@ const AppSidebar = () => {
                         See All Projects
                       </Link>
                     </SidebarMenuButton>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <SidebarMenuAction>
+                          <MoreHorizontal />
+                        </SidebarMenuAction>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="right" align="start">
+                        <DropdownMenuItem>
+                          <span>Edit Project</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <span>Delete Project</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
@@ -211,7 +234,9 @@ const AppSidebar = () => {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>Account</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push("/users/test")}>
+                  Account
+                </DropdownMenuItem>
                 <DropdownMenuItem>Setting</DropdownMenuItem>
                 <DropdownMenuItem>Sign out</DropdownMenuItem>
               </DropdownMenuContent>
