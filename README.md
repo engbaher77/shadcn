@@ -2,6 +2,62 @@ https://www.youtube.com/watch?v=SjsQdfvxjL8&t=1166s
 
 
 
+### Implementation Plan & Checkpoints
+
+Here is a step-by-step breakdown of the implementation process.
+
+---
+
+__Checkpoint 1: Core Authentication Flow__
+
+- __Goal:__ Allow users to log in and log out. Protect application routes.
+
+- __Tasks:__
+
+  1. Build the __Login Page UI__ using `shadcn/ui` components.
+  2. Create an `AuthService` to handle the API call to your NestJS `/auth/login` endpoint.
+  3. Implement logic to receive and store JWTs securely.
+  4. Set up a __protected layout__ for the main application that only authenticated users can access.
+  5. Implement the __logout__ functionality.
+
+---
+
+__Checkpoint 2: Multi-Business Context Switching__
+
+- __Goal:__ Allow users who belong to multiple businesses to select which one they want to manage.
+
+- __Tasks:__
+
+  1. After login, decode the JWT to get the `businessIds` array.
+  2. If the user has more than one business, display a __Business Selector UI__ (e.g., a dropdown in the navbar).
+  3. Create the `BusinessContext` to store the `activeBusinessId` globally.
+  4. Update the API service to send the `activeBusinessId` with every relevant request.
+
+---
+
+__Checkpoint 3: RBAC & ABAC (Role & Permission Handling)__
+
+- __Goal:__ Control UI elements and user actions based on roles and fine-grained permissions.
+
+- __Tasks:__
+
+  1. Fetch the user's specific claims (permissions) for the selected business from a backend endpoint (e.g., `/auth/claims?businessId=...`).
+  2. Store these claims in the `BusinessContext`.
+  3. Create a custom hook `usePermission(resource: string, action: string)` that returns `true` or `false`.
+  4. Refactor UI components to use this hook to conditionally render buttons, links, and form fields. For example, an "Edit" button would only be visible if `usePermission('settings', 'update')` is true.
+
+---
+
+__Checkpoint 4: Feature Implementation (Pages & Components)__
+
+- __Goal:__ Build the core features of the application, respecting the established auth rules.
+
+- __Tasks:__
+
+  1. Build out the main application pages (e.g., Dashboard, Settings, Messages, Pages).
+  2. Each page and component will use the `usePermission` hook to ensure users can only see and do what they are authorized for.
+  3. Implement features like __Channel Scoping__ in the Messages view, likely as a set of filters.
+
 
 
 

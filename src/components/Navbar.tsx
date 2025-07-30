@@ -13,11 +13,23 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
-import { SidebarTrigger, useSidebar } from "./ui/sidebar";
+import { SidebarTrigger } from "./ui/sidebar";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { logout } from "@/lib/redux/features/auth/authSlice";
+import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const { theme, setTheme } = useTheme();
-  const { toggleSidebar } = useSidebar();
+  const { setTheme } = useTheme();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const user = useAppSelector((state) => state.auth.user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    deleteCookie("auth_token");
+    router.push("/login");
+  };
   return (
     <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10">
       {/* LEFT */}
@@ -53,8 +65,11 @@ const Navbar = () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src="https://avatars.githubusercontent.com/u/1486366" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={`https://ui-avatars.com/api/?name=${user?.firstName}+${user?.lastName}`} />
+              <AvatarFallback>
+                {user?.firstName?.[0]}
+                {user?.lastName?.[0]}
+              </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent sideOffset={10}>
@@ -68,7 +83,7 @@ const Navbar = () => {
               <Settings className="h-[1.2rem] w-[1.2rem] mr-2" />
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem onClick={handleLogout} variant="destructive">
               <LogOut className="h-[1.2rem] w-[1.2rem] mr-2" />
               Logout
             </DropdownMenuItem>
