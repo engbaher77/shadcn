@@ -1,83 +1,33 @@
-'use client';
+import Image from "next/image";
+import Link from "next/link";
 
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useAppDispatch } from '@/lib/redux/hooks';
-import { loginSuccess } from '@/lib/redux/features/auth/authSlice';
-import { useRouter } from 'next/navigation';
-import { setCookie } from 'cookies-next';
-import { authService } from '@/lib/api/authService';
-import { useState } from 'react';
+import { AuthForm } from "@/components/auth-form";
 
-export default function LoginForm() {
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const email = (document.getElementById('email') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
-    setIsLoading(true);
-    try {
-      const response = await authService.login(email, password);
-      dispatch(loginSuccess(response));
-      setCookie('auth_token', response.accessToken);
-      router.push('/');
-    } catch (error) {
-      console.error('Login failed:', error);
-      // Handle login error (e.g., show a toast notification)
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <Card className="mx-auto max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-              </div>
-              <Input id="password" type="password" required />
-            </div>
-            <Button
-              onClick={handleLogin}
-              disabled={isLoading}
-              type="submit"
-              className="w-full"
-              onSubmit={handleLogin}
-            >
-              {isLoading ? 'Logging in...' : 'Login'}
-            </Button>
+    <div className="grid min-h-svh w-full lg:grid-cols-[1fr_1fr]">
+      <div className="flex flex-col p-6 md:p-10">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 font-medium">
+            <Image src="/logo.svg" alt="logo" width={24} height={24} />
+            <span className="font-semibold">Puzzelman</span>
+          </Link>
+        </div>
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-sm">
+            <AuthForm />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
+      <div className="bg-muted relative hidden lg:block">
+        <Image
+          src="https://images.unsplash.com/photo-1590069261209-f8e9b8642343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80"
+          alt="Image"
+          width="1920"
+          height="1080"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+        />
+      </div>
     </div>
   );
 }
