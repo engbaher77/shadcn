@@ -1,4 +1,4 @@
-import { User } from '@/types';
+import { User, RegisterDto } from '@/types';
 import { BASE_URL } from '@/config';
 
 const USE_MOCKED_DATA = process.env.NODE_ENV === 'production';//development';
@@ -31,6 +31,26 @@ const mockedLoginResponse: LoginResponse = {
 };
 
 export const authService = {
+  register: async (data: RegisterDto): Promise<LoginResponse> => {
+    if (USE_MOCKED_DATA) {
+      console.log('Using mocked register data');
+      return new Promise((resolve) =>
+        setTimeout(() => resolve(mockedLoginResponse), 1000)
+      );
+    } else {
+      const response = await fetch(`${BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+      return response.json();
+    }
+  },
   login: async (email: string, password: string): Promise<LoginResponse> => {
     if (USE_MOCKED_DATA) {
       console.log('Using mocked login data');

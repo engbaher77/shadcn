@@ -1,13 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Github, Mail, Eye, EyeOff } from "lucide-react";
+import { Mail, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-
+import { authService } from "@/lib/api/authService";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,17 +30,24 @@ const registerSchema = z.object({
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters." })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
-      message:
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number.",
-    }),
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+      {
+        message:
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+      }
+    ),
 });
+
+interface RegisterFormProps extends React.ComponentProps<"div"> {
+  onRegisterSuccess: () => void;
+}
 
 export function RegisterForm({
   className,
+  onRegisterSuccess,
   ...props
-}: React.ComponentProps<"div">) {
-  const router = useRouter();
+}: RegisterFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -60,21 +66,23 @@ export function RegisterForm({
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     try {
-      // Handle registration logic here
-      console.log("Registration values:", values);
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
+      await authService.register(values);
       toast.success(
         "Account created successfully! Please check your email to verify your account."
       );
-
-      // Redirect to login or verification page
-      router.push("/login?registered=true");
+      onRegisterSuccess();
     } catch (error) {
       console.error("Registration failed:", error);
-      toast.error("Registration failed. Please try again.");
+      if (error instanceof Error) {
+        try {
+          const errorData = JSON.parse(error.message);
+          toast.error(errorData.message || "Registration failed. Please try again.");
+        } catch {
+          toast.error(error.message);
+        }
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
     }
   }
 

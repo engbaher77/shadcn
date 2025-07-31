@@ -58,9 +58,13 @@ export function AuthForm() {
           )}
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-sm">
-            {isLogin ? <LoginForm /> : <RegisterForm />}
-          </div>
+        <div className="w-full max-w-sm">
+          {isLogin ? (
+            <LoginForm />
+          ) : (
+            <RegisterForm onRegisterSuccess={() => setIsLogin(true)} />
+          )}
+        </div>
         </div>
       </div>
       <div className="bg-gradient-to-br from-brand/5 via-primary/5 to-accent/10 relative hidden lg:block">
