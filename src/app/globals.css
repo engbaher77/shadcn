@@ -25,6 +25,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -41,78 +42,203 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-custom-color: var(--custom-color);
+  
+  /* Enhanced Omnibot-specific colors */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  
+  /* Channel-specific colors */
+  --color-whatsapp: var(--whatsapp);
+  --color-instagram: var(--instagram);
+  --color-facebook: var(--facebook);
+  --color-email: var(--email);
+  --color-sms: var(--sms);
+  
+  /* Role-based colors */
+  --color-role-owner: var(--role-owner);
+  --color-role-admin: var(--role-admin);
+  --color-role-agent: var(--role-agent);
+  --color-role-viewer: var(--role-viewer);
+  
+  /* Status colors */
+  --color-status-online: var(--status-online);
+  --color-status-away: var(--status-away);
+  --color-status-busy: var(--status-busy);
+  --color-status-offline: var(--status-offline);
 }
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  
+  /* Base colors - Professional messaging platform theme */
+  --background: oklch(0.99 0.005 210);
+  --foreground: oklch(0.15 0.015 220);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.15 0.015 220);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  --custom-color: oklch(0.6 0.2 150);
+  --popover-foreground: oklch(0.15 0.015 220);
+  
+  /* Primary - Modern blue for messaging */
+  --primary: oklch(0.47 0.13 230);
+  --primary-foreground: oklch(0.98 0.005 230);
+  
+  /* Secondary - Neutral gray */
+  --secondary: oklch(0.96 0.01 220);
+  --secondary-foreground: oklch(0.25 0.02 220);
+  
+  /* Muted - Light backgrounds */
+  --muted: oklch(0.97 0.008 220);
+  --muted-foreground: oklch(0.55 0.015 220);
+  
+  /* Accent - Vibrant highlight */
+  --accent: oklch(0.94 0.02 220);
+  --accent-foreground: oklch(0.25 0.02 220);
+  
+  /* Destructive - Error states */
+  --destructive: oklch(0.58 0.22 20);
+  --destructive-foreground: oklch(0.98 0.01 20);
+  
+  /* Border and input */
+  --border: oklch(0.92 0.01 220);
+  --input: oklch(0.92 0.01 220);
+  --ring: oklch(0.47 0.13 230);
+  
+  /* Brand - Main brand color (purple-blue gradient feel) */
+  --brand: oklch(0.52 0.18 270);
+  --brand-foreground: oklch(0.98 0.005 270);
+  
+  /* Semantic colors */
+  --success: oklch(0.55 0.15 145);
+  --success-foreground: oklch(0.98 0.01 145);
+  --warning: oklch(0.7 0.18 85);
+  --warning-foreground: oklch(0.15 0.02 85);
+  --info: oklch(0.6 0.15 200);
+  --info-foreground: oklch(0.98 0.01 200);
+  
+  /* Channel colors - Matching platform branding */
+  --whatsapp: oklch(0.5 0.15 155); /* WhatsApp green */
+  --instagram: oklch(0.55 0.25 320); /* Instagram pink-purple */
+  --facebook: oklch(0.45 0.2 230); /* Facebook blue */
+  --email: oklch(0.5 0.12 25); /* Professional orange-red */
+  --sms: oklch(0.45 0.15 280); /* SMS purple */
+  
+  /* Role-based colors for RBAC visualization */
+  --role-owner: oklch(0.45 0.2 25); /* Gold/amber for owner */
+  --role-admin: oklch(0.5 0.18 280); /* Purple for admin */
+  --role-agent: oklch(0.55 0.15 200); /* Blue for agent */
+  --role-viewer: oklch(0.6 0.08 220); /* Gray-blue for viewer */
+  
+  /* Status indicators */
+  --status-online: oklch(0.55 0.15 145); /* Green */
+  --status-away: oklch(0.7 0.18 85); /* Yellow */
+  --status-busy: oklch(0.6 0.2 20); /* Red */
+  --status-offline: oklch(0.6 0.05 220); /* Gray */
+  
+  /* Charts - Adjusted for messaging analytics */
+  --chart-1: oklch(0.52 0.18 270); /* Brand purple */
+  --chart-2: oklch(0.5 0.15 155); /* WhatsApp green */
+  --chart-3: oklch(0.55 0.25 320); /* Instagram pink */
+  --chart-4: oklch(0.45 0.2 230); /* Facebook blue */
+  --chart-5: oklch(0.7 0.18 85); /* Warning yellow */
+  
+  /* Sidebar - Clean professional look */
+  --sidebar: oklch(0.985 0.005 220);
+  --sidebar-foreground: oklch(0.25 0.02 220);
+  --sidebar-primary: oklch(0.52 0.18 270);
+  --sidebar-primary-foreground: oklch(0.98 0.005 270);
+  --sidebar-accent: oklch(0.94 0.02 220);
+  --sidebar-accent-foreground: oklch(0.25 0.02 220);
+  --sidebar-border: oklch(0.92 0.01 220);
+  --sidebar-ring: oklch(0.52 0.18 270);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-  --custom-color: oklch(0.6 0.2 150);
+  /* Dark theme - Professional dark mode for messaging */
+  --background: oklch(0.08 0.01 220);
+  --foreground: oklch(0.95 0.01 220);
+  --card: oklch(0.12 0.015 220);
+  --card-foreground: oklch(0.95 0.01 220);
+  --popover: oklch(0.12 0.015 220);
+  --popover-foreground: oklch(0.95 0.01 220);
+  
+  /* Primary - Brighter in dark mode */
+  --primary: oklch(0.65 0.18 230);
+  --primary-foreground: oklch(0.08 0.01 230);
+  
+  /* Secondary */
+  --secondary: oklch(0.18 0.02 220);
+  --secondary-foreground: oklch(0.85 0.01 220);
+  
+  /* Muted */
+  --muted: oklch(0.16 0.02 220);
+  --muted-foreground: oklch(0.65 0.015 220);
+  
+  /* Accent */
+  --accent: oklch(0.2 0.025 220);
+  --accent-foreground: oklch(0.85 0.01 220);
+  
+  /* Destructive */
+  --destructive: oklch(0.65 0.25 25);
+  --destructive-foreground: oklch(0.95 0.01 25);
+  
+  /* Border and input */
+  --border: oklch(0.25 0.02 220);
+  --input: oklch(0.22 0.02 220);
+  --ring: oklch(0.65 0.18 230);
+  
+  /* Brand - Adjusted for dark mode */
+  --brand: oklch(0.68 0.22 270);
+  --brand-foreground: oklch(0.08 0.01 270);
+  
+  /* Semantic colors - Dark mode adjustments */
+  --success: oklch(0.65 0.18 145);
+  --success-foreground: oklch(0.08 0.01 145);
+  --warning: oklch(0.75 0.2 85);
+  --warning-foreground: oklch(0.08 0.02 85);
+  --info: oklch(0.7 0.18 200);
+  --info-foreground: oklch(0.08 0.01 200);
+  
+  /* Channel colors - Maintained brand recognition */
+  --whatsapp: oklch(0.6 0.18 155);
+  --instagram: oklch(0.65 0.28 320);
+  --facebook: oklch(0.55 0.22 230);
+  --email: oklch(0.6 0.15 25);
+  --sms: oklch(0.55 0.18 280);
+  
+  /* Role colors - Enhanced visibility in dark mode */
+  --role-owner: oklch(0.7 0.25 45);
+  --role-admin: oklch(0.65 0.22 280);
+  --role-agent: oklch(0.65 0.18 200);
+  --role-viewer: oklch(0.6 0.1 220);
+  
+  /* Status indicators */
+  --status-online: oklch(0.65 0.18 145);
+  --status-away: oklch(0.75 0.2 85);
+  --status-busy: oklch(0.65 0.22 20);
+  --status-offline: oklch(0.5 0.05 220);
+  
+  /* Charts */
+  --chart-1: oklch(0.68 0.22 270);
+  --chart-2: oklch(0.6 0.18 155);
+  --chart-3: oklch(0.65 0.28 320);
+  --chart-4: oklch(0.55 0.22 230);
+  --chart-5: oklch(0.75 0.2 85);
+  
+  /* Sidebar */
+  --sidebar: oklch(0.1 0.015 220);
+  --sidebar-foreground: oklch(0.85 0.01 220);
+  --sidebar-primary: oklch(0.68 0.22 270);
+  --sidebar-primary-foreground: oklch(0.08 0.01 270);
+  --sidebar-accent: oklch(0.2 0.025 220);
+  --sidebar-accent-foreground: oklch(0.85 0.01 220);
+  --sidebar-border: oklch(0.25 0.02 220);
+  --sidebar-ring: oklch(0.68 0.22 270);
 }
 
 @layer base {
@@ -121,5 +247,103 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+  
+  /* Custom utility classes for Omnibot */
+  .text-brand {
+    color: oklch(var(--brand));
+  }
+  
+  .bg-brand {
+    background-color: oklch(var(--brand));
+  }
+  
+  .border-brand {
+    border-color: oklch(var(--brand));
+  }
+  
+  /* Channel indicator utilities */
+  .channel-whatsapp {
+    color: oklch(var(--whatsapp));
+  }
+  
+  .channel-instagram {
+    color: oklch(var(--instagram));
+  }
+  
+  .channel-facebook {
+    color: oklch(var(--facebook));
+  }
+  
+  .channel-email {
+    color: oklch(var(--email));
+  }
+  
+  .channel-sms {
+    color: oklch(var(--sms));
+  }
+  
+  /* Role indicator utilities */
+  .role-owner {
+    color: oklch(var(--role-owner));
+  }
+  
+  .role-admin {
+    color: oklch(var(--role-admin));
+  }
+  
+  .role-agent {
+    color: oklch(var(--role-agent));
+  }
+  
+  .role-viewer {
+    color: oklch(var(--role-viewer));
+  }
+  
+  /* Status indicator utilities */
+  .status-online {
+    color: oklch(var(--status-online));
+  }
+  
+  .status-away {
+    color: oklch(var(--status-away));
+  }
+  
+  .status-busy {
+    color: oklch(var(--status-busy));
+  }
+  
+  .status-offline {
+    color: oklch(var(--status-offline));
+  }
+}
+
+/* Animation enhancements for messaging interface */
+@keyframes message-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.message-enter {
+  animation: message-slide-in 0.2s ease-out;
+}
+
+.status-indicator {
+  animation: status-pulse 2s infinite;
 }
