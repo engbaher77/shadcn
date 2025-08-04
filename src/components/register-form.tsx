@@ -1,6 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
 import { useForm } from "react-hook-form";
+import { useAppDispatch } from "@/lib/redux/hooks";
+import { loginSuccess } from "@/lib/redux/features/auth/authSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -30,13 +34,10 @@ const registerSchema = z.object({
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters." })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      {
-        message:
-          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-      }
-    ),
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, {
+      message:
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+    }),
 });
 
 interface RegisterFormProps extends React.ComponentProps<"div"> {
@@ -48,6 +49,8 @@ export function RegisterForm({
   onRegisterSuccess,
   ...props
 }: RegisterFormProps) {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -66,17 +69,23 @@ export function RegisterForm({
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     try {
-      await authService.register(values);
-      toast.success(
-        "Account created successfully! Please check your email to verify your account."
-      );
+      const response = await authService.register(values);
+      toast.success("Account created successfully!");
+
+      dispatch(loginSuccess(response));
+      setCookie("auth_token", response.accessToken);
+      toast.success("Welcome back to Omnibot!");
+      router.push("/");
+
       onRegisterSuccess();
     } catch (error) {
       console.error("Registration failed:", error);
       if (error instanceof Error) {
         try {
           const errorData = JSON.parse(error.message);
-          toast.error(errorData.message || "Registration failed. Please try again.");
+          toast.error(
+            errorData.message || "Registration failed. Please try again."
+          );
         } catch {
           toast.error(error.message);
         }

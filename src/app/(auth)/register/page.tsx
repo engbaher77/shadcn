@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { LoginForm } from "./login-form";
-import { RegisterForm } from "./register-form";
+import { RegisterForm } from "@/components/register-form";
 
-export function AuthForm() {
-  const [isLogin, setIsLogin] = useState(false);
+export default function RegisterPage() {
+const router = useRouter();
 
   return (
     <div className="grid min-h-svh w-full lg:grid-cols-[1fr_1fr]">
@@ -33,38 +32,22 @@ export function AuthForm() {
             </div>
             <span className="font-semibold text-brand">Omnibot</span>
           </Link>
-          {isLogin ? (
-            <div className="text-sm text-muted-foreground">
-              <span>Don't have an account? </span>
-              <Button
-                variant="link"
-                onClick={() => setIsLogin(false)}
-                className="text-brand font-medium"
-              >
-                Sign up
-              </Button>
-            </div>
-          ) : (
-            <div className="text-sm text-muted-foreground">
-              <span>Already have an account? </span>
-              <Button
-                variant="link"
-                onClick={() => setIsLogin(true)}
-                className="text-brand font-medium"
-              >
-                Sign in
-              </Button>
-            </div>
-          )}
+
+          <div className="text-sm text-muted-foreground">
+            <span>Already have an account? </span>
+            <Button
+              variant="link"
+              onClick={() => router.push("/login")}
+              className="text-brand font-medium"
+            >
+              Sign in
+            </Button>
+          </div>
         </div>
         <div className="flex flex-1 items-center justify-center">
-        <div className="w-full max-w-sm">
-          {isLogin ? (
-            <LoginForm />
-          ) : (
-            <RegisterForm onRegisterSuccess={() => setIsLogin(true)} />
-          )}
-        </div>
+          <div className="w-full max-w-sm">
+            <RegisterForm onRegisterSuccess={() => router.push("/login")} />
+          </div>
         </div>
       </div>
       <div className="bg-gradient-to-br from-brand/5 via-primary/5 to-accent/10 relative hidden lg:block">

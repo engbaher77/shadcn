@@ -13,7 +13,8 @@ export default function MainLayout({
   defaultOpen: boolean;
 }) {
   const pathname = usePathname();
-  const isAuthPage = pathname.startsWith("/login");
+  const authPaths = ["/login", "/register", "/privacy", "/terms"];
+  const isAuthPage = authPaths.some((path) => pathname.startsWith(path));
 
   if (isAuthPage) {
     return <>{children}</>;

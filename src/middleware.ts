@@ -7,10 +7,10 @@ export function middleware(request: NextRequest) {
   // Assume a cookie `auth_token` is used to check for authentication
   const isAuthenticated = request.cookies.has('auth_token');
 
-  const publicRoutes = ['/login'];
+  const publicRoutes = ['/login', '/register', '/privacy', '/terms'];
 
   if (!isAuthenticated && !publicRoutes.includes(pathname)) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/register', request.url));
   }
 
   if (isAuthenticated && publicRoutes.includes(pathname)) {
