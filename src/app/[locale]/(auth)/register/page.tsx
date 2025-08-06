@@ -6,9 +6,12 @@ import { useRouter } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
 import { RegisterForm } from "@/components/register-form";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 export default function RegisterPage() {
-const router = useRouter();
+  const router = useRouter();
+  const t = useTranslations("auth");
 
   return (
     <div className="grid min-h-svh w-full lg:grid-cols-[1fr_1fr]">
@@ -34,7 +37,7 @@ const router = useRouter();
           </Link>
 
           <div className="text-sm text-muted-foreground">
-            <span>Already have an account? </span>
+            <span>{t("alreadyHaveAccount")}</span>
             <Button
               variant="link"
               onClick={() => router.push("/login")}
@@ -43,6 +46,7 @@ const router = useRouter();
               Sign in
             </Button>
           </div>
+          <LanguageSwitcher />
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-sm">
