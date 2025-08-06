@@ -16,7 +16,7 @@ export default function MainLayout({
 
   const locale = useLocale();
   const pathname = usePathname();
-  const authPaths = [`${locale}/login`, `${locale}/register`, `${locale}/privacy`, `${locale}/terms`];
+  const authPaths = [`/${locale}/login`, `/${locale}/register`, `/${locale}/privacy`, `/${locale}/terms`];
   const isAuthPage = authPaths.some((path) => pathname.startsWith(path));
 
   if (isAuthPage) {

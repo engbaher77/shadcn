@@ -5,6 +5,12 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import StoreProvider from "@/components/providers/StoreProvider";
 import { Toaster } from "@/components/ui/sonner";
 
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "../../../src/i18n/routing";
+import MainLayout from "@/components/MainLayout";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -22,26 +28,37 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string; [key: string]: string | undefined };
 }>) {
+  const { locale } = await params;
+
+  if (!routing.locales.includes(locale)) {
+    notFound();
+  }
+
+  const messages = await getMessages();
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
       >
-        <StoreProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster position="top-right" richColors closeButton />
-          </ThemeProvider>
-        </StoreProvider>
+        <NextIntlClientProvider messages={messages}>
+          <StoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <MainLayout defaultOpen={true}>{children}</MainLayout>
+              <Toaster position="top-right" richColors closeButton />
+            </ThemeProvider>
+          </StoreProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
