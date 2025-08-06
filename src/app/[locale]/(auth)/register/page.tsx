@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
 import { RegisterForm } from "@/components/register-form";

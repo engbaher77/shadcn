@@ -4,6 +4,7 @@ import AppSidebar from "@/components/AppSidebar";
 import Navbar from "@/components/Navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
+import { useLocale } from 'next-intl';
 
 export default function MainLayout({
   children,
@@ -12,8 +13,10 @@ export default function MainLayout({
   children: React.ReactNode;
   defaultOpen: boolean;
 }) {
+
+  const locale = useLocale();
   const pathname = usePathname();
-  const authPaths = ["/login", "/register", "/privacy", "/terms"];
+  const authPaths = [`${locale}/login`, `${locale}/register`, `${locale}/privacy`, `${locale}/terms`];
   const isAuthPage = authPaths.some((path) => pathname.startsWith(path));
 
   if (isAuthPage) {
