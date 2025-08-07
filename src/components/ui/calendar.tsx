@@ -2,10 +2,15 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import { DayPicker, type CustomComponents } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+
+interface CustomIconComponents extends CustomComponents {
+  IconLeft: React.ComponentType<React.ComponentPropsWithoutRef<typeof ChevronLeft>>;
+  IconRight: React.ComponentType<React.ComponentPropsWithoutRef<typeof ChevronRight>>;
+}
 
 function Calendar({
   className,
@@ -59,14 +64,16 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("size-4", className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("size-4", className)} {...props} />
-        ),
-      }}
+      components={
+        {
+          IconLeft: ({ className, ...props }) => (
+            <ChevronLeft className={cn("size-4", className)} {...props} />
+          ),
+          IconRight: ({ className, ...props }) => (
+            <ChevronRight className={cn("size-4", className)} {...props} />
+          ),
+        } as CustomIconComponents
+      }
       {...props}
     />
   )

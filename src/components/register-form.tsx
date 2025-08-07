@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
 import { useForm } from "react-hook-form";
@@ -271,19 +272,19 @@ export function RegisterForm({
       <div className="space-y-4">
         <p className="text-muted-foreground px-2 text-center text-xs leading-relaxed">
           By creating an account, you agree to our{" "}
-          <a
+          <Link
             href="/terms"
             className="underline underline-offset-4 hover:text-brand transition-colors"
           >
             Terms of Service
-          </a>{" "}
+          </Link>{" "}
           and{" "}
-          <a
+          <Link
             href="/privacy"
             className="underline underline-offset-4 hover:text-brand transition-colors"
           >
             Privacy Policy
-          </a>
+          </Link>
         </p>
 
         <div className="bg-muted/50 rounded-lg p-4 space-y-2">

@@ -46,7 +46,6 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { useRouter } from "next/navigation";
-import { use } from "react";
 
 const items = [
   {

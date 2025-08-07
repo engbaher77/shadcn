@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -34,7 +35,7 @@ export default function LoginPage() {
           </Link>
 
           <div className="text-sm text-muted-foreground">
-            <span>Don't have an account? </span>
+            <span>Don&apos;t have an account? </span>
             <Button
               variant="link"
               onClick={() => router.push("/register")}
@@ -46,14 +47,16 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-sm">
-            <LoginForm />
+            <Suspense fallback={<div>Loading...</div>}>
+              <LoginForm />
+            </Suspense>
           </div>
         </div>
       </div>
       <div className="bg-gradient-to-br from-brand/5 via-primary/5 to-accent/10 relative hidden lg:block">
         <div className="absolute inset-0 bg-gradient-to-br from-brand/20 to-primary/10" />
         <Image
-          src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1376&q=80"
+          src="https://images.unsplash.com/photo-1611224923853-80b023f02d71"
           alt="Business communication and messaging"
           width="1920"
           height="1080"

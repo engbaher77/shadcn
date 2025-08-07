@@ -57,7 +57,7 @@ export default function RegisterPage() {
       <div className="bg-gradient-to-br from-brand/5 via-primary/5 to-accent/10 relative hidden lg:block">
         <div className="absolute inset-0 bg-gradient-to-br from-brand/20 to-primary/10" />
         <Image
-          src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1376&q=80"
+          src="https://images.unsplash.com/photo-1611224923853-80b023f02d71"
           alt="Business communication and messaging"
           width="1920"
           height="1080"

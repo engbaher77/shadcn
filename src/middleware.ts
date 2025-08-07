@@ -40,15 +40,15 @@ export function middleware(request: NextRequest) {
 
 function getLocale(request: NextRequest) {
   // Negotiator expects a plain object with keys
-  // const acceptLanguage = request.headers.get('accept-language');
-  // const languages = acceptLanguage ? acceptLanguage.split(',').map(lang => lang.split(';')[0]) : [];
+  const acceptLanguage = request.headers.get('accept-language');
+  const languages = acceptLanguage ? acceptLanguage.split(',').map(lang => lang.split(';')[0]) : [];
   
-  // // Check if any of the preferred languages match our supported locales
-  // for (const lang of languages) {
-  //   if (locales.includes(lang)) {
-  //     return lang;
-  //   }
-  // }
+  // Check if any of the preferred languages match our supported locales
+  for (const lang of languages) {
+    if (locales.includes(lang as typeof locales[number])) {
+      return lang;
+    }
+  }
   return defaultLocale;
 }
 
@@ -76,14 +76,14 @@ function handleAuth(request: NextRequest) {
   if (!isAuthenticated && !isPublicRoute) {
     // Redirect to login page of the current locale if not authenticated and not a public route
     const currentLocale = pathname.split('/')[1]; // Extract locale from path
-    const redirectPath = locales.includes(currentLocale) ? `/${currentLocale}/login` : `/${defaultLocale}/login`;
+    const redirectPath = locales.includes(currentLocale as typeof locales[number]) ? `/${currentLocale}/login` : `/${defaultLocale}/login`;
     return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 
   if (isAuthenticated && isPublicRoute) {
     // Redirect authenticated users from public routes to the home page of their current locale
     const currentLocale = pathname.split('/')[1];
-    const redirectPath = locales.includes(currentLocale) ? `/${currentLocale}` : `/${defaultLocale}`;
+    const redirectPath = locales.includes(currentLocale as typeof locales[number]) ? `/${currentLocale}` : `/${defaultLocale}`;
     return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 

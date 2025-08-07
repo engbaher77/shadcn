@@ -6,7 +6,7 @@ import StoreProvider from "@/components/providers/StoreProvider";
 import { Toaster } from "@/components/ui/sonner";
 
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../../src/i18n/routing";
 import MainLayout from "@/components/MainLayout";
@@ -36,9 +36,10 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string; [key: string]: string | undefined };
+  params: { locale: typeof routing.locales[number]; [key: string]: string | undefined };
 }>) {
-  const { locale } = await params;
+  const { locale } = params;
+  setRequestLocale(locale);
 
   if (!routing.locales.includes(locale)) {
     notFound();

@@ -1,8 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setCookie } from 'cookies-next';
-import { Github, Mail, Eye, EyeOff, CheckCircle } from 'lucide-react';
+import { Mail, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -156,12 +157,12 @@ export function LoginForm({
               <FormItem>
                 <div className="flex items-center justify-between">
                   <FormLabel>Password</FormLabel>
-                  <a
+                  <Link
                     href="/forgot-password"
                     className="text-sm text-brand hover:text-brand/80 underline-offset-4 hover:underline transition-colors"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
                 <FormControl>
                   <div className="relative">
@@ -274,13 +275,13 @@ export function LoginForm({
 
       <div className="text-center">
         <p className="text-sm text-muted-foreground">
-          Don't have an account?{' '}
-          <a
+          Don&apos;t have an account?{' '}
+          <Link
             href="/register"
             className="font-medium text-brand hover:text-brand/80 underline-offset-4 hover:underline transition-colors"
           >
             Start your free trial
-          </a>
+          </Link>
         </p>
       </div>
     </div>
